@@ -7,10 +7,13 @@ package tableroller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,7 +21,9 @@ import java.util.logging.Logger;
  */
 public class TableRollerGUI extends javax.swing.JFrame
     {
+
     public static Random generator;
+
     /**
      * Creates new form TableRollerGUI
      */
@@ -44,6 +49,7 @@ public class TableRollerGUI extends javax.swing.JFrame
         planetGenButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         planetGenTextArea = new javax.swing.JTextArea();
+        planetSaveButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Table Roller");
@@ -65,30 +71,44 @@ public class TableRollerGUI extends javax.swing.JFrame
         planetGenTextArea.setRows(5);
         jScrollPane1.setViewportView(planetGenTextArea);
 
+        planetSaveButton.setText("Save Generated Planets");
+        planetSaveButton.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                planetSaveButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout PlanetGenPanelLayout = new javax.swing.GroupLayout(PlanetGenPanel);
         PlanetGenPanel.setLayout(PlanetGenPanelLayout);
         PlanetGenPanelLayout.setHorizontalGroup(
             PlanetGenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(PlanetGenPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(numPlanetsLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(numPlanetsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(planetGenButton)
-                .addContainerGap(97, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap(103, Short.MAX_VALUE))
+            .addGroup(PlanetGenPanelLayout.createSequentialGroup()
+                .addComponent(planetSaveButton)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         PlanetGenPanelLayout.setVerticalGroup(
             PlanetGenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PlanetGenPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(44, 44, 44)
                 .addGroup(PlanetGenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(numPlanetsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(numPlanetsLabel)
+                    .addComponent(numPlanetsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(planetGenButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(planetSaveButton))
         );
 
         jTabbedPane1.addTab("Planet Gen", PlanetGenPanel);
@@ -114,34 +134,48 @@ public class TableRollerGUI extends javax.swing.JFrame
         numPlanets = (numPlanets < 1) ? 1 : numPlanets;
 
         //output += "Generating " + numPlanets + " planets!\n";
-
-        for(int i=0; i<numPlanets; i++)
+        for (int i = 0; i < numPlanets; i++)
             {
             output += "Planet " + i + ":\n" + generatePlanet() + "\n";
-            }        
+            }
 
         planetGenTextArea.setText(output);
     }//GEN-LAST:event_planetGenButtonMouseClicked
 
+    private void planetSaveButtonMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_planetSaveButtonMouseClicked
+    {//GEN-HEADEREND:event_planetSaveButtonMouseClicked
+        try
+            {
+            FileWriter outFile = new FileWriter("PlanetGen.txt");            
+            outFile.write(planetGenTextArea.getText());            
+            outFile.close();
+            
+            JOptionPane.showMessageDialog(null, "Planets saved to PlanetGen.txt", "Save Successful", JOptionPane.INFORMATION_MESSAGE);
+            }
+        catch (IOException ex)
+            {
+            Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_planetSaveButtonMouseClicked
+
     public String generatePlanet()
         {
         String output = "";
-        
+
         try
             {
             //load planet file
-            Scanner sc = new Scanner(new File("src\\tableroller\\tables\\PlanetGenList.txt"));
-            
+            Scanner sc = new Scanner(new File("tables\\PlanetGenList.txt"));
+
             int numFiles = sc.nextInt();
             sc.nextLine();
-            
+
             //output += "PlanetGenList contains " + numFiles + " files\n";
-            
-            for(int i=0; i<numFiles; i++)
+            for (int i = 0; i < numFiles; i++)
                 {
                 String filename = sc.nextLine();
                 //output += filename + "\n";
-                
+
                 output += processPlanetFile(filename) + "\n";
                 }
             sc.close();
@@ -152,37 +186,37 @@ public class TableRollerGUI extends javax.swing.JFrame
             }
         return output;
         }
-    
+
     public String processPlanetFile(String filename)
         {
         String output = "";
-        
+
         try
             {
             Scanner sc = new Scanner(new File(filename));
-            
+
             String[] line = sc.nextLine().split(" ");
             int numDice = Integer.parseInt(line[0]);
             int dieFaces = Integer.parseInt(line[1]);
-            
+
             int roll = 0;
-            for(int i=0; i<numDice; i++)
+            for (int i = 0; i < numDice; i++)
                 {
-                roll += rollDie(dieFaces);                
+                roll += rollDie(dieFaces);
                 }
-            
+
             //output += "total roll: " + roll + "\n";
             //NOTE: minimum possible value = number of dice rolled
             //Ex: 2d6 - min value is 2
             int maxValue = numDice * dieFaces;
-            
+
             int row = numDice;
-            while(sc.hasNextLine() && row != roll)
+            while (sc.hasNextLine() && row != roll)
                 {
                 sc.nextLine();
                 row++;
                 }
-            
+
             output += sc.nextLine();
             sc.close();
             }
@@ -190,15 +224,15 @@ public class TableRollerGUI extends javax.swing.JFrame
             {
             Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
+
         return output;
         }//end of processPlanetFile
-    
+
     public int rollDie(int faces)
         {
         return generator.nextInt(faces) + 1;
         }//end of rollDie
-    
+
     /**
      * @param args the command line arguments
      */
@@ -246,7 +280,7 @@ public class TableRollerGUI extends javax.swing.JFrame
                 new TableRollerGUI().setVisible(true);
                 }
             });
-        
+
         generator = new Random();
         }
 
@@ -258,5 +292,6 @@ public class TableRollerGUI extends javax.swing.JFrame
     private javax.swing.JSpinner numPlanetsSpinner;
     private javax.swing.JButton planetGenButton;
     private javax.swing.JTextArea planetGenTextArea;
+    private javax.swing.JButton planetSaveButton;
     // End of variables declaration//GEN-END:variables
     }

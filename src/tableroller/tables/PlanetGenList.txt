@@ -1,8 +1,8 @@
 7
-src\\tableroller\\tables\\AtmosphereTable.txt
-src\\tableroller\\tables\\TemperatureTable.txt
-src\\tableroller\\tables\\BiosphereTable.txt
-src\\tableroller\\tables\\PopulationTable.txt
-src\\tableroller\\tables\\TechTable.txt
-src\\tableroller\\tables\\WorldTags.txt
-src\\tableroller\\tables\\WorldTags.txt
+tables\\AtmosphereTable.txt
+tables\\TemperatureTable.txt
+tables\\BiosphereTable.txt
+tables\\PopulationTable.txt
+tables\\TechTable.txt
+tables\\WorldTags.txt
+tables\\WorldTags.txt
