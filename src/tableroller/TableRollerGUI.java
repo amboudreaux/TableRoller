@@ -9,10 +9,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,6 +33,7 @@ public class TableRollerGUI extends javax.swing.JFrame
     public TableRollerGUI()
         {
         initComponents();
+        generator = new Random();
         }
 
     /**
@@ -87,27 +91,27 @@ public class TableRollerGUI extends javax.swing.JFrame
             PlanetGenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(PlanetGenPanelLayout.createSequentialGroup()
+                .addComponent(planetSaveButton)
+                .addGap(0, 226, Short.MAX_VALUE))
+            .addGroup(PlanetGenPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(numPlanetsLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(numPlanetsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(planetGenButton)
-                .addContainerGap(103, Short.MAX_VALUE))
-            .addGroup(PlanetGenPanelLayout.createSequentialGroup()
-                .addComponent(planetSaveButton)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PlanetGenPanelLayout.setVerticalGroup(
             PlanetGenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PlanetGenPanelLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addContainerGap()
                 .addGroup(PlanetGenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(numPlanetsLabel)
                     .addComponent(numPlanetsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(planetGenButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(planetSaveButton))
         );
@@ -141,10 +145,21 @@ public class TableRollerGUI extends javax.swing.JFrame
         //always generate at least 1 planet
         numPlanets = (numPlanets < 1) ? 1 : numPlanets;
 
-        //output += "Generating " + numPlanets + " planets!\n";
-        for (int i = 0; i < numPlanets; i++)
+        JFileChooser fileChooser = new JFileChooser("masterFiles");
+        fileChooser.setDialogTitle("Select Master File");  
+        String defaultFilename = "masterFiles\\PlanetGenList.txt";
+        fileChooser.setSelectedFile(new File(defaultFilename));
+
+        int selection = fileChooser.showOpenDialog(null);
+
+        if (selection == JFileChooser.APPROVE_OPTION)
             {
-            output += "Planet " + i + ":\n" + generatePlanet() + "\n";
+            File masterFile = fileChooser.getSelectedFile();
+            //output += "Generating " + numPlanets + " planets!\n";
+            for (int i = 0; i < numPlanets; i++)
+                {
+                output += "Planet " + i + ":\n" + generatePlanet(masterFile) + "\n";
+                }
             }
 
         planetGenTextArea.setText(output);
@@ -157,17 +172,24 @@ public class TableRollerGUI extends javax.swing.JFrame
      */
     private void planetSaveButtonMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_planetSaveButtonMouseClicked
     {//GEN-HEADEREND:event_planetSaveButtonMouseClicked
-        try
-            {
-            FileWriter outFile = new FileWriter("..\\..\\PlanetGen.txt");
-            outFile.write(planetGenTextArea.getText());
-            outFile.close();
+        JFileChooser fileChooser = new JFileChooser(".");
+        fileChooser.setDialogTitle("Save");        
 
-            JOptionPane.showMessageDialog(null, "Planets saved to PlanetGen.txt", "Save Successful", JOptionPane.INFORMATION_MESSAGE);
-            }
-        catch (IOException ex)
+        int selection = fileChooser.showSaveDialog(null);
+
+        if (selection == JFileChooser.APPROVE_OPTION)
             {
-            Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, ex);
+            try
+                {
+                File filename = fileChooser.getSelectedFile();
+                FileWriter outFile = new FileWriter(filename + ".txt");
+                outFile.write(planetGenTextArea.getText());
+                outFile.close();
+                }
+            catch (IOException ex)
+                {
+                Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
     }//GEN-LAST:event_planetSaveButtonMouseClicked
 
@@ -178,19 +200,17 @@ public class TableRollerGUI extends javax.swing.JFrame
     
     TODO: Change hardcoded filename to allow user to choose master file.
      */
-    public String generatePlanet()
+    public String generatePlanet(File masterFile)
         {
         String output = "";
 
+        Scanner sc;
         try
             {
-            //load planet file
-            Scanner sc = new Scanner(new File("tables\\PlanetGenList.txt"));
+            sc = new Scanner(masterFile);
 
             int numFiles = sc.nextInt();
             sc.nextLine();
-
-            //output += "PlanetGenList contains " + numFiles + " files\n";
             for (int i = 0; i < numFiles; i++)
                 {
                 String filename = sc.nextLine();
@@ -204,6 +224,7 @@ public class TableRollerGUI extends javax.swing.JFrame
             {
             Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
+
         return output;
         }//end of generatePlanet
 
@@ -307,8 +328,6 @@ public class TableRollerGUI extends javax.swing.JFrame
                 new TableRollerGUI().setVisible(true);
                 }
             });
-
-        generator = new Random();                
         }//end of main
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
