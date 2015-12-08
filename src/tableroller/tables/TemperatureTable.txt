@@ -1,0 +1,12 @@
+2 6
+Frozen
+Variable cold-to-temperate
+Cold
+Cold
+Temperate
+Temperate
+Temperate
+Warm
+Warm
+Variable temperate-to-warm
+Burning

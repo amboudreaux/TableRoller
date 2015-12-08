@@ -1,0 +1,12 @@
+2 6
+Tech Level 0. Stone-age technology
+Tech Level 1. Medieval technology
+Tech Level 2. 19th century technology
+Tech Level 3. 20th century technology
+Tech Level 3. 20th century technology
+Tech Level 4. Baseline postech
+Tech Level 4. Baseline postech
+Tech Level 4. Baseline postech
+Tech Level 4. Baseline postech
+Tech Level 4 with specialities or some surviving pretech
+Tech Level 5. Pretech, pre-Silence technology

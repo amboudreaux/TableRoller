@@ -1,0 +1,61 @@
+1 60
+Abandoned Colony
+Alien Ruins
+Altered Humanity
+Area 51
+Badlands World
+Bubble Cities
+Civil War
+Cold War
+Colonized Population
+Desert World
+Eugenic Cult
+Exchange Consulate
+Feral World
+Flying Cities
+Forbidden Tech
+Freak Geology
+Freak Weather
+Friendly Foe
+Gold Rush
+Hatred
+Heavy Industry
+Heavy Mining
+Hostile Biosphere
+Hostile Space
+Local Speciality
+Local Tech
+Major Spaceyard
+Minimal Contact
+Misandry/Misogyny
+Oceanic World
+Out of Contact
+Outpost World
+Perimeter Agency
+Pilgrimage Site
+Police State
+Preceptor Archive
+Pretech Cultists
+Primitive Aliens
+Psionics Fear
+Psionics Worship
+Psionics Academy
+Quarantined World
+Radioactive World
+Regional Hegemon
+Restrictive Laws
+Rigid Culture
+Seagoing Cities
+Sealed Menace
+Sectarians
+Seismic Instability
+Secret Masters
+Theocracy
+Tomb World
+Trade Hub
+Tyranny
+Unbraked AI
+Warlords
+Xenophiles
+Xenophobes
+Zombies

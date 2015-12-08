@@ -1,0 +1,12 @@
+2 6
+Corrosive
+Inert gas
+Airless or thin atmosphere
+Breathable mix
+Breathable mix
+Breathable mix
+Breathable mix
+Breathable mix
+Thick atmosphere, breathable with a pressure mask
+Invasive, toxic atmosphere
+Corrosive and invasive atmosphere
