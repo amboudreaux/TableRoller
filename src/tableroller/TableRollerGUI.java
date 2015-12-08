@@ -72,6 +72,7 @@ public class TableRollerGUI extends javax.swing.JFrame
         jScrollPane1.setViewportView(planetGenTextArea);
 
         planetSaveButton.setText("Save Generated Planets");
+        planetSaveButton.setEnabled(false);
         planetSaveButton.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
@@ -127,10 +128,17 @@ public class TableRollerGUI extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+    This function calls generatePlanet a number of times equal to the value in the
+    numPlanetsSpinner.
+     */
     private void planetGenButtonMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_planetGenButtonMouseClicked
     {//GEN-HEADEREND:event_planetGenButtonMouseClicked
+        planetSaveButton.setEnabled(true);
         String output = "";
         int numPlanets = Integer.parseInt(numPlanetsSpinner.getValue().toString());
+
+        //always generate at least 1 planet
         numPlanets = (numPlanets < 1) ? 1 : numPlanets;
 
         //output += "Generating " + numPlanets + " planets!\n";
@@ -142,14 +150,19 @@ public class TableRollerGUI extends javax.swing.JFrame
         planetGenTextArea.setText(output);
     }//GEN-LAST:event_planetGenButtonMouseClicked
 
+    /*
+    This function writes the generated planets to a text file.
+    
+    TODO: Allow user to specify filename.
+     */
     private void planetSaveButtonMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_planetSaveButtonMouseClicked
     {//GEN-HEADEREND:event_planetSaveButtonMouseClicked
         try
             {
-            FileWriter outFile = new FileWriter("PlanetGen.txt");            
-            outFile.write(planetGenTextArea.getText());            
+            FileWriter outFile = new FileWriter("..\\..\\PlanetGen.txt");
+            outFile.write(planetGenTextArea.getText());
             outFile.close();
-            
+
             JOptionPane.showMessageDialog(null, "Planets saved to PlanetGen.txt", "Save Successful", JOptionPane.INFORMATION_MESSAGE);
             }
         catch (IOException ex)
@@ -158,6 +171,13 @@ public class TableRollerGUI extends javax.swing.JFrame
             }
     }//GEN-LAST:event_planetSaveButtonMouseClicked
 
+    /*
+    This function reads in the planet generation master file, which contains the
+    filenames of the tables to be rolled on. For each file listed, it calls the
+    processPlanetFile function.
+    
+    TODO: Change hardcoded filename to allow user to choose master file.
+     */
     public String generatePlanet()
         {
         String output = "";
@@ -185,8 +205,15 @@ public class TableRollerGUI extends javax.swing.JFrame
             Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         return output;
-        }
+        }//end of generatePlanet
 
+    /*
+    This function processes one planet file. The assumed file format is as follows:
+    Line 1: Two values
+        The number of dice to roll
+        The size of die used
+    Lines 2-n: One value per line, the table value for a given die roll
+     */
     public String processPlanetFile(String filename)
         {
         String output = "";
@@ -228,14 +255,14 @@ public class TableRollerGUI extends javax.swing.JFrame
         return output;
         }//end of processPlanetFile
 
+    /*
+    This function rolls a die with the specified number of sides and returns the result.
+     */
     public int rollDie(int faces)
         {
         return generator.nextInt(faces) + 1;
         }//end of rollDie
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[])
         {
         /* Set the Nimbus look and feel */
@@ -281,8 +308,8 @@ public class TableRollerGUI extends javax.swing.JFrame
                 }
             });
 
-        generator = new Random();
-        }
+        generator = new Random();                
+        }//end of main
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PlanetGenPanel;
@@ -294,4 +321,4 @@ public class TableRollerGUI extends javax.swing.JFrame
     private javax.swing.JTextArea planetGenTextArea;
     private javax.swing.JButton planetSaveButton;
     // End of variables declaration//GEN-END:variables
-    }
+    }//end of class

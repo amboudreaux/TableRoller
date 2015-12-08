@@ -122,6 +122,7 @@
             <Component class="javax.swing.JButton" name="planetSaveButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Save Generated Planets"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="planetSaveButtonMouseClicked"/>
