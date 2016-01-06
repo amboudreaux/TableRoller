@@ -43,10 +43,9 @@ public class TableRollerGUI extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        TabPanel = new javax.swing.JTabbedPane();
         PlanetGenPanel = new javax.swing.JPanel();
         numPlanetsSpinner = new javax.swing.JSpinner();
         numPlanetsLabel = new javax.swing.JLabel();
@@ -54,6 +53,26 @@ public class TableRollerGUI extends javax.swing.JFrame
         jScrollPane1 = new javax.swing.JScrollPane();
         planetGenTextArea = new javax.swing.JTextArea();
         planetSaveButton = new javax.swing.JButton();
+        rollmasterWeaponPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        RMActionTypeCB = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        RMRollConventionCB = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        RMWeaponSelectCB = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        RMWeaponSkillBonus = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        RMSpecialItemBonus = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        RMBonus = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        RMActivityNotUsed = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        RMDefenseBonus = new javax.swing.JTextField();
+        RMRollButton = new javax.swing.JButton();
+        RMResultTextArea = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Table Roller");
@@ -63,10 +82,8 @@ public class TableRollerGUI extends javax.swing.JFrame
         numPlanetsLabel.setText("Planets to Generate:");
 
         planetGenButton.setText("Generate!");
-        planetGenButton.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        planetGenButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 planetGenButtonMouseClicked(evt);
             }
         });
@@ -77,10 +94,8 @@ public class TableRollerGUI extends javax.swing.JFrame
 
         planetSaveButton.setText("Save Generated Planets");
         planetSaveButton.setEnabled(false);
-        planetSaveButton.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        planetSaveButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 planetSaveButtonMouseClicked(evt);
             }
         });
@@ -116,17 +131,147 @@ public class TableRollerGUI extends javax.swing.JFrame
                 .addComponent(planetSaveButton))
         );
 
-        jTabbedPane1.addTab("Planet Gen", PlanetGenPanel);
+        TabPanel.addTab("Planet Gen", PlanetGenPanel);
+
+        jLabel1.setText("Type of Action:");
+
+        RMActionTypeCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Snap", "Normal", "Deliberate" }));
+        RMActionTypeCB.setSelectedIndex(1);
+
+        jLabel2.setText("Rolling Conventions:");
+
+        RMRollConventionCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fumble Unmodified", "Open Ended Low", "Open Ended High" }));
+
+        jLabel3.setText("Weapon:");
+
+        RMWeaponSelectCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dagger" }));
+
+        jLabel4.setText("Skill Bonus:");
+
+        RMWeaponSkillBonus.setEditable(false);
+        RMWeaponSkillBonus.setText("0");
+
+        jLabel5.setText("Special Item Bonus:");
+
+        RMSpecialItemBonus.setEditable(false);
+        RMSpecialItemBonus.setText("0");
+
+        jLabel6.setText("Penalties/Bonuses:");
+
+        RMBonus.setText("0");
+
+        jLabel7.setText("Activity Not Used:");
+
+        RMActivityNotUsed.setText("0");
+
+        jLabel8.setText("Defense Bonus:");
+
+        RMDefenseBonus.setText("0");
+
+        RMRollButton.setText("ROLL!");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        RMResultTextArea.setViewportView(jTextArea1);
+
+        javax.swing.GroupLayout rollmasterWeaponPanelLayout = new javax.swing.GroupLayout(rollmasterWeaponPanel);
+        rollmasterWeaponPanel.setLayout(rollmasterWeaponPanelLayout);
+        rollmasterWeaponPanelLayout.setHorizontalGroup(
+            rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rollmasterWeaponPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(RMResultTextArea)
+                    .addComponent(RMRollButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, rollmasterWeaponPanelLayout.createSequentialGroup()
+                        .addGroup(rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(rollmasterWeaponPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RMActionTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(rollmasterWeaponPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RMRollConventionCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(rollmasterWeaponPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(rollmasterWeaponPanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RMWeaponSkillBonus, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RMSpecialItemBonus, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(RMWeaponSelectCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(rollmasterWeaponPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RMBonus, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(rollmasterWeaponPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RMActivityNotUsed, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(rollmasterWeaponPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RMDefenseBonus, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 40, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        rollmasterWeaponPanelLayout.setVerticalGroup(
+            rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rollmasterWeaponPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(RMActionTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(RMRollConventionCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(RMWeaponSelectCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(RMWeaponSkillBonus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(RMSpecialItemBonus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(RMBonus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(RMActivityNotUsed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(RMDefenseBonus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(RMRollButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RMResultTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        TabPanel.addTab("Rollmaster Weapon", rollmasterWeaponPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(TabPanel)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(TabPanel)
         );
 
         pack();
@@ -332,12 +477,32 @@ public class TableRollerGUI extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PlanetGenPanel;
+    private javax.swing.JComboBox<String> RMActionTypeCB;
+    private javax.swing.JTextField RMActivityNotUsed;
+    private javax.swing.JTextField RMBonus;
+    private javax.swing.JTextField RMDefenseBonus;
+    private javax.swing.JScrollPane RMResultTextArea;
+    private javax.swing.JButton RMRollButton;
+    private javax.swing.JComboBox<String> RMRollConventionCB;
+    private javax.swing.JTextField RMSpecialItemBonus;
+    private javax.swing.JComboBox<String> RMWeaponSelectCB;
+    private javax.swing.JTextField RMWeaponSkillBonus;
+    private javax.swing.JTabbedPane TabPanel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel numPlanetsLabel;
     private javax.swing.JSpinner numPlanetsSpinner;
     private javax.swing.JButton planetGenButton;
     private javax.swing.JTextArea planetGenTextArea;
     private javax.swing.JButton planetSaveButton;
+    private javax.swing.JPanel rollmasterWeaponPanel;
     // End of variables declaration//GEN-END:variables
     }//end of class
