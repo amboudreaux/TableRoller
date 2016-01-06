@@ -36,7 +36,7 @@ public class TableRollerGUI extends javax.swing.JFrame
     initComponents();
     generator = new Random();
     
-    daggerAttackChart = new String[151][20];
+    daggerAttackChart = new String[151][20];  //row 0 is not used
     loadWeaponCharts();
     }
 
@@ -412,7 +412,7 @@ public class TableRollerGUI extends javax.swing.JFrame
       roll += skillBonus + specialItemBonus + bonus - activity - defenseBonus;
       output += "Final roll = " + roll + "\n";
       
-      roll = (roll < 0) ? 0 : roll;
+      roll = (roll < 1) ? 1 : roll;
       roll = (roll > 150) ? 150 : roll;
       
       String result = daggerAttackChart[roll][targetArmor-1];
