@@ -107,9 +107,9 @@
 10 b p,10 b s,7 a p,5 a s,9 b p,8 b s,5 b p,5 b p,5 a s,6 a s,4,3,5,5,4,4,3,3,3,2
 10 b s,11 c p,7 a s,5 a p,9 bs,8 b p,6 b s,6 b s,5 a p,6 a p,4,3,5,6,4,4,4,3,3,2
 10 b p,11 c s,7 a p,5 a s,9 b p,8 b s,6 b p,6 b p,6 b s,6 a s,4,3,5,6,4,5,4,3,3,2
-11 b s,11 c p,8 a s,5 a p,9 bs,8 b p,6 b s,6 b s,6 b p,6 a p,4 a k,4,6 a k,6,4,5,4,3,3,2
+11 b s,11 c p,8 a s,5 a p,9 b s,8 b p,6 b s,6 b s,6 b p,6 a p,4 a k,4,6 a k,6,4,5,4,3,3,2
 11 b p,11 c s,8 a p,5 a s,9 b p,8 b s,6 b p,6 b p,6 b s,6 a s,4 a p,4,6 a p,6,4,5,4,3,3,2
-11 b s,11 c p,8 b s,5 a p,9 bs,8 b p,6 b s,6 b s,6 b p,6 a p,4 a s,4,6 a s,6,5,5,4,3,3,2
+11 b s,11 c p,8 b s,5 a p,9 b s,8 b p,6 b s,6 b s,6 b p,6 a p,4 a s,4,6 a s,6,5,5,4,3,3,2
 11 b p,11 c s,8 b p,5 a s,10 b p,8 b s,6 b p,6 b p,6 b s,7 a s,4 a p,4,6 a p,6,5,5,4,3,3,2
 11 b s,11 c p,8 b s,6 a p,10 b s,9 b p,6 b s,6 b s,6 b p,7 a p,4 a s,4,6 a s,6,5,5,4,3,3,3
 12 c p,12 c s,8 b p,6 a s,10 c p,9 b s,6 b p,6 b p,7 b s,7 a s,5 a p,4 a k,6 a p,6,5,5,4,3,3,3
@@ -127,7 +127,7 @@
 14 d p,13 d s,10 c p,7 c p,12 c p,10 c s,7 c p,7 c p,9 c s,9 b p,6 b p,5 b p,8 b p,8 a p,6 a s,6,5 a p,3,4,3
 14 d s,13 d p,10 c s,7 c p,12 d s,11 c p,7 c p,7 c p,9 c p,9 b p,6 b p,5 b p,8 b s,8 a s,6 a p,6,5 a s,4,4,3
 14 d p,14 d s,10 c p,8 c p,13 d p,11 c s,7 c p,7 c p,9 c p,9 c p,6 b p,5 b p,8 b p,8 a p,6 a p,6,5 a p,4,4,3
-15 d s,14 d p,11 c s,8 c p,13 d s,11 c p,7 c p,7 c p,9 c p,9 ce p,6 b p,5 b p,8 b s,8 a s,6 a p,6 a k,5 a s,4 a k,4,3
+15 d s,14 d p,11 c s,8 c p,13 d s,11 c p,7 c p,7 c p,9 c p,9 c p,6 b p,5 b p,8 b s,8 a s,6 a p,6 a k,5 a s,4 a k,4,3
 15 d p,14 d s,11 d p,8 c p,13 d p,11 c s,7 c p,7 c p,9 c p,9 c p,6 b p,5 b p,8 b p,8 a p,6 a p,6 a p,5 a p,4 a p,4,3
 15 d s,14 d p,11 d p,8 c p,13 d s,11 d p,7 c p,7 c p,9 c p,10 c p,6 b p,5 b p,8 b s,8 b s,6 a p,6 a s,5 a s,4 a s,4,3
 15 d p,14 e s,11 d p,8 c p,13 d p,11 d p,7 d p,7 c p,10 c p,10 c p,7 c p,5 b p,8 b p,9 b p,6 a p,6 a p,5 b p,4 a p,4,3
