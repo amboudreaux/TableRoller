@@ -27,11 +27,15 @@ public class TableRollerGUI extends javax.swing.JFrame
 
   public static Random generator;
   public static String[][][] weaponCharts;
+  public static String[][][] critCharts;
   public static String[][] punctureCriticalChart;
   public static String[] weaponNames;
   public static int[] fumbleRanges;
   public static String[] weaponFileNames;
   public static String[] weaponTypes;
+  public static String[] critTypes;
+  public static String[] critFileNames;
+  public static String[] critCodes;
 
   /**
    * Creates new form TableRollerGUI
@@ -361,8 +365,6 @@ public class TableRollerGUI extends javax.swing.JFrame
 
   /*
     This function writes the generated planets to a text file.
-    
-    TODO: Allow user to specify filename.
    */
     private void planetSaveButtonMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_planetSaveButtonMouseClicked
     {//GEN-HEADEREND:event_planetSaveButtonMouseClicked
@@ -482,8 +484,32 @@ public class TableRollerGUI extends javax.swing.JFrame
         //exResult has 3 values: the damage (a number), the crit column (letter), and crit chart (letter)
         RMResultTextArea.append("=== CRITICAL HIT ===\n");
         RMResultTextArea.append("Base Damage: " + exResult[0] + "\n");
-        RMResultTextArea.append("Column: " + exResult[1] + "\n");
-        RMResultTextArea.append("Crit Type: " + exResult[2] + "\n");
+        
+        int column = (int)exResult[1].charAt(0)-'a'; //convert a-e to 0-5
+        RMResultTextArea.append("Column: " + exResult[1] + ": " + column + "\n");        
+        
+        String type = "";
+        
+        //check for special crit types (exResult will only be length 2)
+        if(exResult.length == 2)
+          {
+          RMResultTextArea.append("Special crit type: Check weapon used for crit type");
+          //TODO: check for brawling, ma strikes, or ma sweeps and set type accordingly
+          type = "b"; //always set to brawling for now
+          }
+        else //for regular crit types
+          {
+          RMResultTextArea.append("Crit Type: " + exResult[2] + "\n");
+          type = exResult[2];
+          }
+        
+        int critIndex = findCritIndex(type);
+        RMResultTextArea.append("Roll on " + critTypes[critIndex] + " crit chart\n");
+        
+        //just roll d100 on the crit chart
+        int critRoll = rollDie(100);
+        result = critCharts[critIndex][critRoll][column];
+        RMResultTextArea.append(result);
         }
       else
         RMResultTextArea.append("Target takes " + result + " damage.\n");
@@ -512,6 +538,29 @@ public class TableRollerGUI extends javax.swing.JFrame
       return -1;
       }
     }//end of findWeaponIndex
+  
+  private int findCritIndex(String crit)
+    {
+    int index = 0;
+    boolean foundIt = false;
+    
+    while(!foundIt && index < critCodes.length)
+      {
+      if(critCodes[index].equals(crit))
+        foundIt = true;
+      else
+        index++;
+      }
+    
+    if(foundIt)
+      return index;
+    else //should never trigger, if it does something went horribly wrong
+      {
+      Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, "ERROR: crit code not found!");
+      System.exit(1);
+      return -1;
+      }
+    }//end of findCritIndex
   
   /* 
     Get max fumble value for a weapon, given its index into the fumble table
@@ -698,6 +747,33 @@ public class TableRollerGUI extends javax.swing.JFrame
     return numWeapons;
     }
   
+  //count number of critical hit types in the master file
+  private int countCritTypes()
+    {
+    Scanner sc;
+    int numCrits = 0;
+    
+    try
+      {
+      sc = new Scanner(new File("masterFiles\\RM_CritTypes.txt"));      
+      
+      while(sc.hasNextLine())
+        {
+        sc.nextLine();
+        numCrits++;
+        }
+      sc.close();
+      }//end of try
+    catch (FileNotFoundException ex)
+      {
+      Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, ex);
+      System.exit(1); 
+      }//end of catch
+    
+    //System.out.println("There are " + numCrits + " crit types");
+    return numCrits;
+    }
+  
   private void loadWeaponFile(int index)
     {
     String filename = weaponFileNames[index];
@@ -724,16 +800,50 @@ public class TableRollerGUI extends javax.swing.JFrame
   
   public void loadCritCharts()
     {
+    int numCrits = countCritTypes();
+    critCharts = new String[numCrits][101][5];
+    critTypes = new String[numCrits];
+    critFileNames = new String[numCrits];
+    critCodes = new String[numCrits];
+    
     Scanner sc;
-    //load puncture critical chart 
+    
+    //load master critical list
     try
       {
-      sc = new Scanner(new File("tables\\PunctureCrit.csv"));
+      sc = new Scanner(new File("masterFiles\\RM_CritTypes.txt"));
 
+      int row = 0;
+      while (sc.hasNextLine())
+        {
+        String[] s = sc.nextLine().split(" ");
+        
+        critTypes[row] = s[0];
+        critFileNames[row] = s[1];
+        critCodes[row] = s[2];
+        loadCritFile(row);                
+        row++;
+        }
+      
+      sc.close();
+      }
+    catch (FileNotFoundException ex)
+      {
+      Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, ex);
+      System.exit(1);
+      }       
+    }//end of loadCritCharts
+
+  private void loadCritFile(int index)
+    {
+    Scanner sc;
+    try
+      {
+      sc = new Scanner(new File(critFileNames[index]));
       int row = 1; //chart starts at 1, not 0
       while (sc.hasNextLine())
         {
-        punctureCriticalChart[row++] = sc.nextLine().split(",");               
+        critCharts[index][row++] = sc.nextLine().split(",");               
         }
       
       sc.close();
@@ -743,10 +853,8 @@ public class TableRollerGUI extends javax.swing.JFrame
       Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, ex);
       System.exit(1);
       }
-    
-    
-    }//end of loadCritCharts
-
+    }
+  
   public static void main(String args[])
     {
     /* Set the Nimbus look and feel */
