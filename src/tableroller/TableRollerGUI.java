@@ -27,11 +27,11 @@ public class TableRollerGUI extends javax.swing.JFrame
 
   public static Random generator;
   public static String[][][] weaponCharts;
-  public static String[][] daggerAttackChart;
   public static String[][] punctureCriticalChart;
   public static String[] weaponNames;
   public static int[] fumbleRanges;
   public static String[] weaponFileNames;
+  public static String[] weaponTypes;
 
   /**
    * Creates new form TableRollerGUI
@@ -41,7 +41,6 @@ public class TableRollerGUI extends javax.swing.JFrame
     initComponents();
     generator = new Random();
     
-    daggerAttackChart = new String[151][20];  //row 0 is not used
     punctureCriticalChart = new String[101][5]; //row 0 is not used    
     loadWeaponCharts();
     loadCritCharts();
@@ -422,7 +421,19 @@ public class TableRollerGUI extends javax.swing.JFrame
       //check for fumble
       if (roll < fumbleMax)
         {
-        RMResultTextArea.append("\nFUMBLE - YOU MISSED\n\n");
+        RMResultTextArea.append("\nFUMBLE\n\n");
+        String type = weaponTypes[weaponIndex];
+        RMResultTextArea.append("Weapon type is " + type + "\n");
+        if(RMThrownCB.isSelected())
+          {
+          type = "Thrown";
+          RMResultTextArea.append("Override: Weapon was thrown\n");
+          }
+        else if(RMMountedCB.isSelected())
+          {
+          type = "Mounted";
+          RMResultTextArea.append("Override: User is mounted\n");
+          }
         //TODO: Roll on fumble chart
         
         return; //nothing else to do
@@ -630,6 +641,7 @@ public class TableRollerGUI extends javax.swing.JFrame
     weaponNames = new String[numWeapons];
     fumbleRanges = new int[numWeapons];
     weaponFileNames = new String[numWeapons];
+    weaponTypes = new String[numWeapons];
     
     //For each weapon, load fumble ranges, add weapon to the dropdown box, and load the attack chart
     RMWeaponSelectCB.removeAllItems();
@@ -644,7 +656,8 @@ public class TableRollerGUI extends javax.swing.JFrame
         RMWeaponSelectCB.addItem(s[0]);
         weaponNames[i] = s[0];
         fumbleRanges[i] = Integer.parseInt(s[1]);
-        weaponFileNames[i] = s[2];   
+        weaponFileNames[i] = s[2]; 
+        weaponTypes[i] = s[3];
         loadWeaponFile(i);
         i++;
         }
