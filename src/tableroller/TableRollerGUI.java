@@ -26,6 +26,7 @@ public class TableRollerGUI extends javax.swing.JFrame
   {
 
   public static Random generator;
+  public static String[][][] weaponCharts;
   public static String[][] daggerAttackChart;
   public static String[][] punctureCriticalChart;
   public static String[] weaponNames;
@@ -367,6 +368,7 @@ public class TableRollerGUI extends javax.swing.JFrame
 
     private void RMRollButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RMRollButtonMouseClicked
       //pull info from the combo boxes and text areas
+      
       String actionType = RMActionTypeCB.getSelectedItem().toString(); 
       //Set modifier based on action type selected
       int actionModifier = 0; //default for normal action
@@ -375,8 +377,10 @@ public class TableRollerGUI extends javax.swing.JFrame
       else if(actionType.equals("Deliberate"))
         actionModifier = 10;
       
-      String weapon = RMWeaponSelectCB.getSelectedItem().toString(); 
-      int fumbleMax = findFumbleMax(weapon);
+      //Get the weapon's index and max fumble value
+      String weapon = RMWeaponSelectCB.getSelectedItem().toString();
+      int weaponIndex = findWeaponIndex(weapon);
+      int fumbleMax = getFumbleMax(weaponIndex);
       
       int skillBonus = Integer.parseInt(RMWeaponSkillBonus.getText().toString());
       int specialItemBonus = Integer.parseInt(RMSpecialItemBonus.getText().toString());
@@ -387,15 +391,16 @@ public class TableRollerGUI extends javax.swing.JFrame
       
       int targetArmor = Integer.parseInt(RMTargetArmor.getText().toString());
 
+      //start by rolling d100
       int roll = rollDie(100);
 
-      RMResultTextArea.setText(""); //clear previous rolls
+      RMResultTextArea.setText(""); //clear info from previous rolls
       RMResultTextArea.append("Base Roll = " + roll + "\n");
 
       //check for fumble
       if (roll < fumbleMax)
         {
-        RMResultTextArea.append("\nFUMBLE - YOU MISS\n\n");
+        RMResultTextArea.append("\nFUMBLE - YOU MISSED\n\n");
         //TODO: Roll on fumble chart
         
         return; //nothing else to do
@@ -434,7 +439,7 @@ public class TableRollerGUI extends javax.swing.JFrame
       roll = (roll < 1) ? 1 : roll;
       roll = (roll > 150) ? 150 : roll;
       
-      String result = daggerAttackChart[roll][targetArmor-1];
+      String result = weaponCharts[weaponIndex][roll][targetArmor-1];
       RMResultTextArea.append("Result = " + result + "\n");
       
       //check if a crit has occurred. If so, cross reference in the appropriate chart.
@@ -451,12 +456,9 @@ public class TableRollerGUI extends javax.swing.JFrame
         RMResultTextArea.append("Target takes " + result + " damage.\n");
     }//GEN-LAST:event_RMRollButtonMouseClicked
 
-  /* 
-    Search the weapon list for the given weapon to get it's index into the fumble table
-  */
-  private int findFumbleMax(String weapon)
+    
+  private int findWeaponIndex(String weapon)
     {
-    //using a simple linear search because there are only 28 weapons
     int index = 0;
     boolean foundIt = false;
     
@@ -469,13 +471,21 @@ public class TableRollerGUI extends javax.swing.JFrame
       }    
     
     if(foundIt)
-      return fumbleRanges[index];
+      return index;
     else //should never trigger, if it does something went horribly wrong
       {
       Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, "ERROR: Weapon fumble range not found!");
+      System.exit(1);
       return -1;
       }
-      
+    }//end of findWeaponIndex
+  
+  /* 
+    Get max fumble value for a weapon, given its index into the fumble table
+  */
+  private int getFumbleMax(int index)
+    {
+    return fumbleRanges[index];    
     }//end of findFumbleMax
           
   private void RMTargetArmorActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_RMTargetArmorActionPerformed
@@ -576,49 +586,13 @@ public class TableRollerGUI extends javax.swing.JFrame
   
   public void loadWeaponCharts()
     {
-    //load dagger chart (only one I have for now)
-    try
-      {
-      Scanner sc = new Scanner(new File("tables\\RolemasterDaggerAttack.csv"));
-
-      int row = 1; //chart starts at 1, not 0
-      while (sc.hasNextLine())
-        {
-        daggerAttackChart[row++] = sc.nextLine().split(",");
-        
-        //RMResultTextArea.append(daggerAttackChart[row][0] + "\n");
-        }
-      
-      sc.close();
-      }
-    catch (FileNotFoundException ex)
-      {
-      Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, ex);
-      }
-    }//end of loadWeaponCharts
-  
-  public void loadCritCharts()
-    {
+    int numWeapons = countWeapons();
     Scanner sc;
-    //load puncture critical chart 
-    try
-      {
-      sc = new Scanner(new File("tables\\PunctureCritical.csv"));
-
-      int row = 1; //chart starts at 1, not 0
-      while (sc.hasNextLine())
-        {
-        punctureCriticalChart[row++] = sc.nextLine().split(",");               
-        }
-      
-      sc.close();
-      }
-    catch (FileNotFoundException ex)
-      {
-      Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, ex);
-      }
     
-    //load fumble ranges and populate the dropdown box
+    //All charts are 150 x 20, but we ignore row 0
+    weaponCharts = new String[numWeapons][151][20];
+    
+    //For each weapon, load fumble ranges, add weapon to the dropdown box, and load the attack chart
     RMWeaponSelectCB.removeAllItems();
     try
       {
@@ -631,17 +605,94 @@ public class TableRollerGUI extends javax.swing.JFrame
         RMWeaponSelectCB.addItem(s[0]);
         weaponNames[i] = s[0];
         fumbleRanges[i] = Integer.parseInt(s[1]);
-        weaponFileNames[i] = s[2];        
+        weaponFileNames[i] = s[2];   
+        loadWeaponFile(i);
         i++;
         }
       
-      sc.close();
-      
+      sc.close();      
       }
     catch(FileNotFoundException ex)
       {
       Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, ex);
+      System.exit(1);
+      }       
+    }//end of loadWeaponCharts
+  
+  //count number of weapons in the master file
+  private int countWeapons()
+    {
+    Scanner sc;
+    int numWeapons = 0;
+    
+    try
+      {
+      sc = new Scanner(new File("masterFiles\\RM_WeaponInfo.txt"));      
+      
+      while(sc.hasNextLine())
+        {
+        sc.nextLine();
+        numWeapons++;
+        }
+      sc.close();
+      }//end of try
+    catch (FileNotFoundException ex)
+      {
+      Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, ex);
+      System.exit(1); 
+      }//end of catch
+    
+    //System.out.println("There are " + numWeapons + " weapons");
+    return numWeapons;
+    }
+  
+  private void loadWeaponFile(int index)
+    {
+    String filename = weaponFileNames[index];
+    try
+      {
+      Scanner sc = new Scanner(new File(filename));
+
+      int row = 1; //chart starts at 1, not 0
+      while (sc.hasNextLine())
+        {
+        weaponCharts[index][row++] = sc.nextLine().split(",");
+        
+        //RMResultTextArea.append(weaponCharts[index][row][0] + "\n");
+        }
+      
+      sc.close();
       }
+    catch (FileNotFoundException ex)
+      {
+      Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, ex);
+      System.exit(1);
+      }
+    }//end of loadWeaponFile
+  
+  public void loadCritCharts()
+    {
+    Scanner sc;
+    //load puncture critical chart 
+    try
+      {
+      sc = new Scanner(new File("tables\\PunctureCrit.csv"));
+
+      int row = 1; //chart starts at 1, not 0
+      while (sc.hasNextLine())
+        {
+        punctureCriticalChart[row++] = sc.nextLine().split(",");               
+        }
+      
+      sc.close();
+      }
+    catch (FileNotFoundException ex)
+      {
+      Logger.getLogger(TableRollerGUI.class.getName()).log(Level.SEVERE, null, ex);
+      System.exit(1);
+      }
+    
+    
     }//end of loadCritCharts
 
   public static void main(String args[])
