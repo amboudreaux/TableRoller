@@ -1,0 +1,7 @@
+Brawling tables\\BrawlingCrit.csv
+Crush tables\\CrushCrit.csv
+Martial_Arts_Strikes tables\\MA_StrikesCrit.csv
+Martial_Arts_Sweeps tables\\MA_SweepsCrit.csv
+Puncture tables\\PunctureCrit.csv
+Slash tables\\SlashCrit.csv
+Unbalance tables\\UnbalanceCrit.csv
