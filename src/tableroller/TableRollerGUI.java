@@ -42,10 +42,7 @@ public class TableRollerGUI extends javax.swing.JFrame
     generator = new Random();
     
     daggerAttackChart = new String[151][20];  //row 0 is not used
-    punctureCriticalChart = new String[101][5]; //row 0 is not used
-    weaponNames = new String[28];
-    fumbleRanges = new int[28];
-    weaponFileNames = new String[28];
+    punctureCriticalChart = new String[101][5]; //row 0 is not used    
     loadWeaponCharts();
     loadCritCharts();
     }
@@ -88,6 +85,8 @@ public class TableRollerGUI extends javax.swing.JFrame
     RMResultTextArea = new javax.swing.JTextArea();
     jLabel2 = new javax.swing.JLabel();
     RMTargetArmor = new javax.swing.JTextField();
+    RMThrownCB = new javax.swing.JCheckBox();
+    RMMountedCB = new javax.swing.JCheckBox();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Table Roller");
@@ -159,7 +158,7 @@ public class TableRollerGUI extends javax.swing.JFrame
 
     jLabel3.setText("Weapon:");
 
-    RMWeaponSelectCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dagger" }));
+    RMWeaponSelectCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Two_Handed_Sword" }));
 
     jLabel4.setText("Skill Bonus:");
 
@@ -206,6 +205,24 @@ public class TableRollerGUI extends javax.swing.JFrame
       }
     });
 
+    RMThrownCB.setText("Thrown?");
+    RMThrownCB.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        RMThrownCBActionPerformed(evt);
+      }
+    });
+
+    RMMountedCB.setText("Mounted?");
+    RMMountedCB.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        RMMountedCBActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout rollmasterWeaponPanelLayout = new javax.swing.GroupLayout(rollmasterWeaponPanel);
     rollmasterWeaponPanel.setLayout(rollmasterWeaponPanelLayout);
     rollmasterWeaponPanelLayout.setHorizontalGroup(
@@ -221,36 +238,39 @@ public class TableRollerGUI extends javax.swing.JFrame
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(RMActionTypeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(RMTargetArmor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
               .addGroup(rollmasterWeaponPanelLayout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RMWeaponSelectCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(RMThrownCB)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(RMMountedCB))
+              .addGroup(rollmasterWeaponPanelLayout.createSequentialGroup()
+                .addGroup(rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                  .addComponent(jLabel4)
+                  .addComponent(jLabel6)
+                  .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(RMDefenseBonus, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                   .addGroup(rollmasterWeaponPanelLayout.createSequentialGroup()
-                    .addComponent(jLabel4)
+                    .addComponent(RMBonus, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(24, 24, 24)
+                    .addComponent(jLabel7)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(RMActivityNotUsed, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                  .addGroup(rollmasterWeaponPanelLayout.createSequentialGroup()
                     .addComponent(RMWeaponSkillBonus, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGap(18, 18, 18)
                     .addComponent(jLabel5)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(RMSpecialItemBonus, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                  .addComponent(RMWeaponSelectCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-              .addGroup(rollmasterWeaponPanelLayout.createSequentialGroup()
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(RMBonus, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(RMActivityNotUsed, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addGroup(rollmasterWeaponPanelLayout.createSequentialGroup()
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(RMDefenseBonus, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGap(0, 40, Short.MAX_VALUE)))
+                    .addComponent(RMSpecialItemBonus, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+            .addGap(0, 35, Short.MAX_VALUE)))
         .addContainerGap())
     );
     rollmasterWeaponPanelLayout.setVerticalGroup(
@@ -265,7 +285,9 @@ public class TableRollerGUI extends javax.swing.JFrame
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel3)
-          .addComponent(RMWeaponSelectCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(RMWeaponSelectCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(RMThrownCB)
+          .addComponent(RMMountedCB))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(rollmasterWeaponPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel4)
@@ -289,7 +311,7 @@ public class TableRollerGUI extends javax.swing.JFrame
         .addContainerGap())
     );
 
-    TabPanel.addTab("Rollmaster Weapon", rollmasterWeaponPanel);
+    TabPanel.addTab("Rollmaster P1", rollmasterWeaponPanel);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -493,6 +515,20 @@ public class TableRollerGUI extends javax.swing.JFrame
     // TODO add your handling code here:
   }//GEN-LAST:event_RMTargetArmorActionPerformed
 
+  private void RMThrownCBActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_RMThrownCBActionPerformed
+  {//GEN-HEADEREND:event_RMThrownCBActionPerformed
+    //Only one of the two checkboxes can be selected
+    if(RMMountedCB.isSelected())
+      RMMountedCB.setSelected(false);
+  }//GEN-LAST:event_RMThrownCBActionPerformed
+
+  private void RMMountedCBActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_RMMountedCBActionPerformed
+  {//GEN-HEADEREND:event_RMMountedCBActionPerformed
+    //Only one of the two checkboxes can be selected
+    if(RMThrownCB.isSelected())
+      RMThrownCB.setSelected(false);
+  }//GEN-LAST:event_RMMountedCBActionPerformed
+
   /*
     This function reads in the planet generation master file, which contains the
     filenames of the tables to be rolled on. For each file listed, it calls the
@@ -591,6 +627,9 @@ public class TableRollerGUI extends javax.swing.JFrame
     
     //All charts are 150 x 20, but we ignore row 0
     weaponCharts = new String[numWeapons][151][20];
+    weaponNames = new String[numWeapons];
+    fumbleRanges = new int[numWeapons];
+    weaponFileNames = new String[numWeapons];
     
     //For each weapon, load fumble ranges, add weapon to the dropdown box, and load the attack chart
     RMWeaponSelectCB.removeAllItems();
@@ -747,11 +786,13 @@ public class TableRollerGUI extends javax.swing.JFrame
   private javax.swing.JTextField RMActivityNotUsed;
   private javax.swing.JTextField RMBonus;
   private javax.swing.JTextField RMDefenseBonus;
+  private javax.swing.JCheckBox RMMountedCB;
   private javax.swing.JScrollPane RMResultScrollPane;
   private javax.swing.JTextArea RMResultTextArea;
   private javax.swing.JButton RMRollButton;
   private javax.swing.JTextField RMSpecialItemBonus;
   private javax.swing.JTextField RMTargetArmor;
+  private javax.swing.JCheckBox RMThrownCB;
   private javax.swing.JComboBox<String> RMWeaponSelectCB;
   private javax.swing.JTextField RMWeaponSkillBonus;
   private javax.swing.JTabbedPane TabPanel;

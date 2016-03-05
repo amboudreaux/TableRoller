@@ -1,28 +1,29 @@
-Battle_Axe 5 tables\\BattleAxe.csv
-Bola 7 tables\\Bola.csv
-Broadsword 3 tables\\Broadsword.csv
-Club 4 tables\\Club.csv
-CompositeBow 4 tables\\CompositeBow.csv
-Dagger 1 tables\\Dagger.csv
-Falchion 5 tables\\Falchion.csv
-Flail 8 tables\\Flail.csv
-Hand_Axe 4 tables\\HandAxe.csv
-Heavy_Crossbow 5 tables\\HeavyCrossbow.csv
-Javelin 4 tables\\Javelin.csv
-Lance 7 tables\\Lance.csv
-Light_Crossbow 5 tables\\LightCrossbow.csv
-Longbow 5 tables\\Longbow.csv
-Mace 2 tables\\Mace.csv
-Main_Gauche 2 tables\\MainGauche.csv
-Morning_Star 8 tables\\MorningStar.csv
-Polearm 7 tables\\Polearm.csv
-Quarterstaff 3 tables\\Quarterstaff.csv
-Rapier 4 tables\\Rapier.csv
-Scimitar 4 tables\\Scimitar.csv
-Shortbow 4 tables\\Shortbow.csv
-Shortsword 2 tables\\Shortsword.csv
-Sling 6 tables\\Sling.csv
-Spear 5 tables\\Spear.csv
-Two_Handed_Sword 5 tables\\TwoHandedSword.csv
-War_Mattock 6 tables\\WarMattock.csv
-Whip 6 tables\\Whip.csv
+Battle_Axe 5 tables\\BattleAxe.csv TwoHanded
+Bola 7 tables\\Bola.csv Thrown
+Broadsword 3 tables\\Broadsword.csv OneHanded
+Club 4 tables\\Club.csv OneHanded
+CompositeBow 4 tables\\CompositeBow.csv Missile
+Dagger 1 tables\\Dagger.csv OneHanded
+Falchion 5 tables\\Falchion.csv OneHanded
+Flail 8 tables\\Flail.csv TwoHanded
+Hand_Axe 4 tables\\HandAxe.csv OneHanded
+Heavy_Crossbow 5 tables\\HeavyCrossbow.csv Missile
+Javelin 4 tables\\Javelin.csv Polearm
+Lance 7 tables\\Lance.csv TwoHanded
+Light_Crossbow 5 tables\\LightCrossbow.csv Missile
+Longbow 5 tables\\Longbow.csv Missile
+Mace 2 tables\\Mace.csv OneHanded 
+Main_Gauche 2 tables\\MainGauche.csv OneHanded
+Morning_Star 8 tables\\MorningStar.csv OneHanded
+Polearm 7 tables\\Polearm.csv Polearm
+Quarterstaff 3 tables\\Quarterstaff.csv TwoHanded
+Rapier 4 tables\\Rapier.csv OneHanded
+Scimitar 4 tables\\Scimitar.csv OneHanded
+Shortbow 4 tables\\Shortbow.csv Missile
+Shortsword 2 tables\\Shortsword.csv OneHanded
+Sling 6 tables\\Sling.csv Missile
+Spear 5 tables\\Spear.csv Polearm
+Two_Handed_Sword 5 tables\\TwoHandedSword.csv TwoHanded
+War_Hammer 4 tables\\WarHammer.csv OneHanded
+War_Mattock 6 tables\\WarMattock.csv TwoHanded 
+Whip 6 tables\\Whip.csv OneHanded
